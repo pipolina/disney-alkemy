@@ -6,8 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -40,13 +40,13 @@ public class MovieEntity {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "character_id")
     )
-    private List<CharacterEntity> characters = new ArrayList<>();
+    private Set<CharacterEntity> characters = new HashSet<>(); //xq define un set y no un arraylist??
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)//Eager significa que la inicializacion va a ser de tipo temprana
     @JoinColumn(name = "gender_id",insertable = false,updatable = false)
     private GenderEntity gender;
 
     @Column(name = "gender_id",nullable = false)
-    private Long genderId; //le agrego el genero para solo enviar el genero al momento de crearlo y no toda la entidad entera
+    private Long genderId; //le agrego el genero para solo enviar el genero al momento de crearlo y no toda la entidad entera. para guardar y actualizar
 
 }
