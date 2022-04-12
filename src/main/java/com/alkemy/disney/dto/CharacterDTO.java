@@ -1,33 +1,26 @@
-package com.alkemy.disney.entity;
+package com.alkemy.disney.dto;
 
+import com.alkemy.disney.entity.MovieEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
-@Table(name = "characters")
-public class CharacterEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+public class CharacterDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String image;
-
     private String name;
-
     private Integer age;
-
     private Double weight; //en kilos
-
     private String history;
-
-    @ManyToMany(mappedBy = "characters", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<MovieEntity> movie = new ArrayList<>();
 
 }
