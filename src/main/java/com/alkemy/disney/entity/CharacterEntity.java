@@ -1,4 +1,4 @@
-package com.alkemy.disney.disney.entity;
+package com.alkemy.disney.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +27,7 @@ public class CharacterEntity {
 
     private String history;
 
-    @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "characters", cascade = CascadeType.PERSIST)
     private List<MovieEntity> movie = new ArrayList<>();
 
 }

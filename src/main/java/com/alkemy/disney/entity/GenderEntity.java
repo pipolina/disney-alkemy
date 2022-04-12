@@ -1,4 +1,4 @@
-package com.alkemy.disney.disney.entity;
+package com.alkemy.disney.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,8 @@ public class GenderEntity {
     @Column(name = "gender")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    private String image;
+
     private List<MovieEntity> movies = new ArrayList<>();
 
 }

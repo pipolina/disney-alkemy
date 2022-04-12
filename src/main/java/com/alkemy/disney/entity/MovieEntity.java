@@ -1,4 +1,4 @@
-package com.alkemy.disney.disney.entity;
+package com.alkemy.disney.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +42,7 @@ public class MovieEntity {
     )
     private Set<CharacterEntity> characters = new HashSet<>(); //xq define un set y no un arraylist??
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)//Eager significa que la inicializacion va a ser de tipo temprana
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)//Eager significa que la inicializacion va a ser de tipo temprana
     @JoinColumn(name = "gender_id",insertable = false,updatable = false)
     private GenderEntity gender;
 
