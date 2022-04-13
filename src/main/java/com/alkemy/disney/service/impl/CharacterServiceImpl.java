@@ -10,6 +10,7 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,9 +25,8 @@ public class CharacterServiceImpl implements CharacterService {
     public CharacterDTO create(CharacterDTO characterDTO){
         CharacterEntity entity = characterMapper.characterDTO2Entity(characterDTO);
         CharacterEntity entitySaved = characterRepository.save(entity);
-        CharacterDTO result = characterMapper.characterEntity2DTO(entitySaved);
 
-    return result;
+    return characterMapper.characterEntity2DTO(entitySaved);
     }
 
     public CharacterDTO update(Long id, CharacterDTO characterDTO){
@@ -41,6 +41,19 @@ public class CharacterServiceImpl implements CharacterService {
 
     public void delete(@NonNull Long id){
         characterRepository.deleteById(id);
+    }
+
+    public CharacterDTO findById(@NonNull Long id) {
+        Optional<CharacterEntity> entity = characterRepository.findById(id);
+        if (!entity.isPresent()) {
+            throw new ParamNotFound("Error: Invalid character id");
+        }
+        return characterMapper.characterEntity2DTO(entity.get());
+    }
+
+    public List<CharacterDTO> getAll(){
+        List<CharacterEntity> entities = characterRepository.findAll();
+        return characterMapper.characterEntityList2DTOList(entities);
     }
 
 }

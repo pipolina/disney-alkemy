@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("characters")
 public class CharacterController {
@@ -31,6 +33,18 @@ public class CharacterController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         characterService.delete(id);
+    }
+
+    @GetMapping("/list")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CharacterDTO> getAll(){
+        return characterService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CharacterDTO findById(@PathVariable Long id) {
+        return  characterService.findById(id);
     }
 
 }

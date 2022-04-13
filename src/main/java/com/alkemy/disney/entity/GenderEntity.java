@@ -22,6 +22,4 @@ public class GenderEntity {
 
     private String image;
 
-    private List<MovieEntity> movies = new ArrayList<>();
-
 }
