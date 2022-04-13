@@ -19,7 +19,7 @@ public class CharacterDTO {
     private String image;
     private String name;
     private Integer age;
-    private Double weight; //en kilos
+    private Double weight;
     private String history;
     private List<MovieEntity> movie = new ArrayList<>();
 
