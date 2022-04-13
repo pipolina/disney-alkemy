@@ -42,7 +42,7 @@ public class MovieEntity {
     )
     private Set<CharacterEntity> characters = new HashSet<>(); //xq define un set y no un arraylist??
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})//Eager significa que la inicializacion va a ser de tipo temprana
+    @ManyToOne
     @JoinColumn(name = "gender_id",insertable = false,updatable = false)
     private GenderEntity gender;
 

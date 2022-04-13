@@ -45,4 +45,14 @@ public class CharacterMapper {
         return dtos;
     }
 
+    public void characterEntityRefreshValues(CharacterEntity entity, CharacterDTO dto) {
+
+        entity.setImage(dto.getImage());
+        entity.setName(dto.getName());
+        entity.setAge(dto.getAge());
+        entity.setWeight(dto.getWeight());
+        entity.setHistory(dto.getHistory());
+
+    }
+
 }
