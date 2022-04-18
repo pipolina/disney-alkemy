@@ -2,6 +2,8 @@ package com.alkemy.disney.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "characters")
+@SQLDelete(sql="UPDATE character SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class CharacterEntity {
 
     @Id
@@ -26,6 +30,8 @@ public class CharacterEntity {
     private Double weight; //en kilos
 
     private String history;
+
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToMany(mappedBy = "characters")
     private List<MovieEntity> movie = new ArrayList<>();

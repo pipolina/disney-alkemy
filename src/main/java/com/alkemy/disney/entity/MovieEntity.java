@@ -2,6 +2,8 @@ package com.alkemy.disney.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -13,6 +15,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "movies")
+@SQLDelete(sql="UPDATE movie SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class MovieEntity {
 
     @Id
@@ -29,6 +33,8 @@ public class MovieEntity {
 
     private Integer qualification;
 
+    private boolean deleted = Boolean.FALSE;
+
     @ManyToMany(
             cascade = {
                     CascadeType.PERSIST,
@@ -40,7 +46,7 @@ public class MovieEntity {
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "character_id")
     )
-    private Set<CharacterEntity> characters = new HashSet<>(); //xq define un set y no un arraylist??
+    private Set<CharacterEntity> characters = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "gender_id",insertable = false,updatable = false)
