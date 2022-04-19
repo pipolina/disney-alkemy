@@ -1,7 +1,10 @@
 package com.alkemy.disney.mapper;
 
 import com.alkemy.disney.dto.CharacterDTO;
+import com.alkemy.disney.dto.MovieDTO;
 import com.alkemy.disney.entity.CharacterEntity;
+import com.alkemy.disney.entity.MovieEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,6 +12,9 @@ import java.util.List;
 
 @Component
 public class CharacterMapper {
+
+    @Autowired
+    MovieMapper movieMapper;
 
     public CharacterEntity characterDTO2Entity(CharacterDTO dto){
         CharacterEntity entity = new CharacterEntity();
@@ -23,7 +29,7 @@ public class CharacterMapper {
         return entity;
     }
 
-    public CharacterDTO characterEntity2DTO(CharacterEntity entity){
+    public CharacterDTO characterEntity2DTO(CharacterEntity entity, boolean loadMovies){
         CharacterDTO dto = new CharacterDTO();
 
         dto.setId(entity.getId());
@@ -32,17 +38,29 @@ public class CharacterMapper {
         dto.setAge(entity.getAge());
         dto.setWeight(entity.getWeight());
         dto.setHistory(entity.getHistory());
-        dto.setMovie(entity.getMovie());
+        if(loadMovies){
+            List<MovieDTO> movieDTOS = movieMapper.movieEntityList2DTOList(entity.getMovie());
+            dto.setMovie(movieDTOS); //el profesor en los videos le envia un dto, pero deberia enviar entity...no entiendo
+        }
+
 
         return dto;
     }
 
-    public List<CharacterDTO> characterEntityList2DTOList(List<CharacterEntity> entities) {
+    public List<CharacterDTO> characterEntityList2DTOList(List<CharacterEntity> entities, boolean loadMovies) {
         List<CharacterDTO> dtos = new ArrayList<>();
         for (CharacterEntity entity : entities) {
-            dtos.add(characterEntity2DTO(entity));
+            dtos.add(characterEntity2DTO(entity,loadMovies));
         }
         return dtos;
+    }
+
+    public List<CharacterEntity> characterDTOList2EntityList(List<CharacterDTO> dtos){
+        List<CharacterEntity> entities = new ArrayList<>();
+        for (CharacterDTO dto : dtos){
+            entities.add(characterDTO2Entity(dto));
+        }
+        return entities;
     }
 
     public void characterEntityRefreshValues(CharacterEntity entity, CharacterDTO dto) {

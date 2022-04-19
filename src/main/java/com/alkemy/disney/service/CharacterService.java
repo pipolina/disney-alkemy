@@ -12,5 +12,6 @@ public interface CharacterService {
     void delete(@NonNull Long id);
     List<CharacterDTO> getAll();
     CharacterDTO findById(@NonNull Long id);
+    List<CharacterDTO> getByFilters(String name, Integer age, List<Long> movie);
 
 }

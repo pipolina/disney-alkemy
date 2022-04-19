@@ -47,4 +47,14 @@ public class CharacterController {
         return  characterService.findById(id);
     }
 
+    @GetMapping("/characters")
+    public ResponseEntity<List<CharacterDTO>> getByFilter(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) List<Long> movie
+    ){
+        List<CharacterDTO> characters = characterService.getByFilters(name, age, movie);
+        return ResponseEntity.ok(characters);
+    }
+
 }

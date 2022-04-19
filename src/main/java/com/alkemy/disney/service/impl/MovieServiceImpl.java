@@ -25,7 +25,7 @@ public class MovieServiceImpl implements MovieService {
     public MovieDTO save(MovieDTO dto){
         MovieEntity entity = movieMapper.movieDTO2Entity(dto);
         MovieEntity savedMovie = movieRepository.save(entity);
-        MovieDTO result = movieMapper.movieEntity2DTO(savedMovie);
+        MovieDTO result = movieMapper.movieEntity2DTO(savedMovie,false);
         return result;
     }
 
@@ -40,7 +40,7 @@ public class MovieServiceImpl implements MovieService {
         if (!entity.isPresent()) {
             throw new ParamNotFound("Error: Invalid movie id");
         }
-        return movieMapper.movieEntity2DTO(entity.get());
+        return movieMapper.movieEntity2DTO(entity.get(),true);
     }
 
     public MovieDTO update(Long id, MovieDTO movieDTO){
@@ -50,7 +50,7 @@ public class MovieServiceImpl implements MovieService {
         }
         movieMapper.movieEntityRefreshValues(entity.get(),movieDTO);
         MovieEntity entitySaved = movieRepository.save(entity.get());
-        return movieMapper.movieEntity2DTO(entitySaved);
+        return movieMapper.movieEntity2DTO(entitySaved,false);
     }
 
     public void delete(@NonNull Long id){
