@@ -38,7 +38,7 @@ public class MovieMapper {
         dto.setCreationDate(entity.getCreationDate());
         dto.setQualification(entity.getQualification());
         if(loadCharacters){
-            List<CharacterDTO> characterDTOS = characterMapper.characterEntityList2DTOList(entity.getCharacters(), false);
+            List<CharacterDTO> characterDTOS = characterMapper.characterEntityList2DTOList(entity.getCharacters());
             dto.setCharacters(characterDTOS);
         }
         dto.setGender(entity.getGender());

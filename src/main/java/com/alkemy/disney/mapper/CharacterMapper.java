@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class CharacterMapper {
@@ -40,17 +41,15 @@ public class CharacterMapper {
         dto.setHistory(entity.getHistory());
         if(loadMovies){
             List<MovieDTO> movieDTOS = movieMapper.movieEntityList2DTOList(entity.getMovie());
-            dto.setMovie(movieDTOS); //el profesor en los videos le envia un dto, pero deberia enviar entity...no entiendo
+            dto.setMovie(movieDTOS); //me pide un entity, pero no entiendo porque
         }
-
-
         return dto;
     }
 
-    public List<CharacterDTO> characterEntityList2DTOList(List<CharacterEntity> entities, boolean loadMovies) {
+    public List<CharacterDTO> characterEntityList2DTOList(List<CharacterEntity> entities) {
         List<CharacterDTO> dtos = new ArrayList<>();
         for (CharacterEntity entity : entities) {
-            dtos.add(characterEntity2DTO(entity,loadMovies));
+            dtos.add(characterEntity2DTO(entity,false));
         }
         return dtos;
     }

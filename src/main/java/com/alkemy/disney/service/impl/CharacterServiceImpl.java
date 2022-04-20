@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CharacterServiceImpl implements CharacterService {
@@ -33,7 +34,7 @@ public class CharacterServiceImpl implements CharacterService {
     public CharacterDTO create(CharacterDTO characterDTO){
         CharacterEntity entity = characterMapper.characterDTO2Entity(characterDTO);
         CharacterEntity entitySaved = characterRepository.save(entity);
-        return characterMapper.characterEntity2DTO(entitySaved,false);
+        return characterMapper.characterEntity2DTO(entitySaved,true);
     }
 
     public CharacterDTO update(Long id, CharacterDTO characterDTO){
@@ -43,7 +44,7 @@ public class CharacterServiceImpl implements CharacterService {
         }
         characterMapper.characterEntityRefreshValues(entity.get(),characterDTO);
         CharacterEntity entitySaved = characterRepository.save(entity.get());
-        return characterMapper.characterEntity2DTO(entitySaved,false);
+        return characterMapper.characterEntity2DTO(entitySaved,true);
     }
 
     public void delete(@NonNull Long id){
@@ -55,18 +56,18 @@ public class CharacterServiceImpl implements CharacterService {
         if (!entity.isPresent()) {
             throw new ParamNotFound("Error: Invalid character id");
         }
-        return characterMapper.characterEntity2DTO(entity.get(),false);
+        return characterMapper.characterEntity2DTO(entity.get(),true);
     }
 
     public List<CharacterDTO> getAll(){
         List<CharacterEntity> entities = characterRepository.findAll();
-        return characterMapper.characterEntityList2DTOList(entities,true);
+        return characterMapper.characterEntityList2DTOList(entities);
     }
 
     public List<CharacterDTO> getByFilters(String name, Integer age, List<Long> movie){
         CharacterFilterDTO filterDTO = new CharacterFilterDTO();
         List<CharacterEntity> entites = characterRepository.findAll(characterSpecification.getByFilters(filterDTO));
-        List<CharacterDTO> result = characterMapper.characterEntityList2DTOList(entites,true);
+        List<CharacterDTO> result = characterMapper.characterEntityList2DTOList(entites);
         return result;
     }
 

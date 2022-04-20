@@ -25,7 +25,7 @@ public class MovieServiceImpl implements MovieService {
     public MovieDTO save(MovieDTO dto){
         MovieEntity entity = movieMapper.movieDTO2Entity(dto);
         MovieEntity savedMovie = movieRepository.save(entity);
-        MovieDTO result = movieMapper.movieEntity2DTO(savedMovie,false);
+        MovieDTO result = movieMapper.movieEntity2DTO(savedMovie,true);
         return result;
     }
 
@@ -50,7 +50,7 @@ public class MovieServiceImpl implements MovieService {
         }
         movieMapper.movieEntityRefreshValues(entity.get(),movieDTO);
         MovieEntity entitySaved = movieRepository.save(entity.get());
-        return movieMapper.movieEntity2DTO(entitySaved,false);
+        return movieMapper.movieEntity2DTO(entitySaved,true);
     }
 
     public void delete(@NonNull Long id){
