@@ -2,20 +2,21 @@ package com.alkemy.disney.mapper;
 
 import com.alkemy.disney.dto.CharacterDTO;
 import com.alkemy.disney.dto.MovieDTO;
-import com.alkemy.disney.entity.CharacterEntity;
 import com.alkemy.disney.entity.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class MovieMapper {
 
     @Autowired
     CharacterMapper characterMapper;
+
+    @Autowired
+    GenderMapper genderMapper;
 
     public MovieEntity movieDTO2Entity (MovieDTO dto){
         MovieEntity entity = new MovieEntity();
@@ -24,8 +25,8 @@ public class MovieMapper {
         entity.setTitle(dto.getTitle());
         entity.setCreationDate(dto.getCreationDate());
         entity.setQualification(dto.getQualification());
-        entity.setCharacters(dto.getCharacters());
-        entity.setGender(dto.getGender());
+        entity.setCharacters(characterMapper.characterDTOList2EntityList(dto.getCharacters()));
+        entity.setGender(genderMapper.genderDTO2Entity(dto.getGender()));
 
         return entity;
     }
@@ -41,7 +42,7 @@ public class MovieMapper {
             List<CharacterDTO> characterDTOS = characterMapper.characterEntityList2DTOList(entity.getCharacters());
             dto.setCharacters(characterDTOS);
         }
-        dto.setGender(entity.getGender());
+        dto.setGender(genderMapper.genderEntity2DTO(entity.getGender()));
 
         return dto;
     }
@@ -60,7 +61,7 @@ public class MovieMapper {
         entity.setTitle(dto.getTitle());
         entity.setCreationDate(dto.getCreationDate());
         entity.setQualification(dto.getQualification());
-        entity.setGender(dto.getGender());
+        entity.setGender(genderMapper.genderDTO2Entity(dto.getGender()));
     }
 
     public List<MovieEntity> movieDTOList2EntityList(List<MovieDTO> dtos){

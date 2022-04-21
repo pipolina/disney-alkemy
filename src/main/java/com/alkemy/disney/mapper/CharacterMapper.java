@@ -3,13 +3,11 @@ package com.alkemy.disney.mapper;
 import com.alkemy.disney.dto.CharacterDTO;
 import com.alkemy.disney.dto.MovieDTO;
 import com.alkemy.disney.entity.CharacterEntity;
-import com.alkemy.disney.entity.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class CharacterMapper {
@@ -25,11 +23,12 @@ public class CharacterMapper {
         entity.setAge(dto.getAge());
         entity.setWeight(dto.getWeight());
         entity.setHistory(dto.getHistory());
-        entity.setMovie(dto.getMovie());
+        entity.setMovie(movieMapper.movieDTOList2EntityList(dto.getMovie()));
 
         return entity;
     }
 
+    //todo: arreglar el tema de los load movies and characters
     public CharacterDTO characterEntity2DTO(CharacterEntity entity, boolean loadMovies){
         CharacterDTO dto = new CharacterDTO();
 
@@ -41,7 +40,7 @@ public class CharacterMapper {
         dto.setHistory(entity.getHistory());
         if(loadMovies){
             List<MovieDTO> movieDTOS = movieMapper.movieEntityList2DTOList(entity.getMovie());
-            dto.setMovie(movieDTOS); //me pide un entity, pero no entiendo porque
+            dto.setMovie(movieDTOS);
         }
         return dto;
     }

@@ -1,7 +1,5 @@
 package com.alkemy.disney.dto;
 
-import com.alkemy.disney.entity.CharacterEntity;
-import com.alkemy.disney.entity.GenderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,9 +7,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -24,8 +20,8 @@ public class MovieDTO {
     private String title;
     private LocalDate creationDate;
     private Integer qualification;
-    private List<CharacterEntity> characters = new ArrayList<>();
-    private GenderEntity gender;
+    private List<CharacterDTO> characters = new ArrayList<>();
+    private GenderDTO gender;
     private Long genderId;
 
 }
