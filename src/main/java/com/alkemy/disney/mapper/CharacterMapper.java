@@ -15,7 +15,7 @@ public class CharacterMapper {
     @Autowired
     MovieMapper movieMapper;
 
-    public CharacterEntity characterDTO2Entity(CharacterDTO dto){
+    public CharacterEntity characterDTO2Entity(CharacterDTO dto, boolean loadMovies){
         CharacterEntity entity = new CharacterEntity();
 
         entity.setImage(dto.getImage());
@@ -23,8 +23,9 @@ public class CharacterMapper {
         entity.setAge(dto.getAge());
         entity.setWeight(dto.getWeight());
         entity.setHistory(dto.getHistory());
-        entity.setMovie(movieMapper.movieDTOList2EntityList(dto.getMovie()));
-
+        if(loadMovies){
+            entity.setMovie(movieMapper.movieDTOList2EntityList(dto.getMovie(),false));
+        }
         return entity;
     }
 
@@ -39,24 +40,24 @@ public class CharacterMapper {
         dto.setWeight(entity.getWeight());
         dto.setHistory(entity.getHistory());
         if(loadMovies){
-            List<MovieDTO> movieDTOS = movieMapper.movieEntityList2DTOList(entity.getMovie());
+            List<MovieDTO> movieDTOS = movieMapper.movieEntityList2DTOList(entity.getMovie(),false);
             dto.setMovie(movieDTOS);
         }
         return dto;
     }
 
-    public List<CharacterDTO> characterEntityList2DTOList(List<CharacterEntity> entities) {
+    public List<CharacterDTO> characterEntityList2DTOList(List<CharacterEntity> entities, boolean loadMovies) {
         List<CharacterDTO> dtos = new ArrayList<>();
         for (CharacterEntity entity : entities) {
-            dtos.add(characterEntity2DTO(entity,false));
+            dtos.add(characterEntity2DTO(entity,loadMovies));
         }
         return dtos;
     }
 
-    public List<CharacterEntity> characterDTOList2EntityList(List<CharacterDTO> dtos){
+    public List<CharacterEntity> characterDTOList2EntityList(List<CharacterDTO> dtos, boolean loadMovies){
         List<CharacterEntity> entities = new ArrayList<>();
         for (CharacterDTO dto : dtos){
-            entities.add(characterDTO2Entity(dto));
+            entities.add(characterDTO2Entity(dto,loadMovies));
         }
         return entities;
     }

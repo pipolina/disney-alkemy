@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class CharacterServiceImpl implements CharacterService {
@@ -26,15 +25,12 @@ public class CharacterServiceImpl implements CharacterService {
     private CharacterRepository characterRepository;
 
     @Autowired
-    private CharacterFilterDTO characterFilterDTO;
-
-    @Autowired
     private CharacterSpecification characterSpecification;
 
     public CharacterDTO create(CharacterDTO characterDTO){
-        CharacterEntity entity = characterMapper.characterDTO2Entity(characterDTO);
+        CharacterEntity entity = characterMapper.characterDTO2Entity(characterDTO,false);
         CharacterEntity entitySaved = characterRepository.save(entity);
-        return characterMapper.characterEntity2DTO(entitySaved,true);
+        return characterMapper.characterEntity2DTO(entitySaved,false);
     }
 
     public CharacterDTO update(Long id, CharacterDTO characterDTO){
@@ -44,7 +40,7 @@ public class CharacterServiceImpl implements CharacterService {
         }
         characterMapper.characterEntityRefreshValues(entity.get(),characterDTO);
         CharacterEntity entitySaved = characterRepository.save(entity.get());
-        return characterMapper.characterEntity2DTO(entitySaved,true);
+        return characterMapper.characterEntity2DTO(entitySaved,false);
     }
 
     public void delete(@NonNull Long id){
@@ -61,13 +57,13 @@ public class CharacterServiceImpl implements CharacterService {
 
     public List<CharacterDTO> getAll(){
         List<CharacterEntity> entities = characterRepository.findAll();
-        return characterMapper.characterEntityList2DTOList(entities);
+        return characterMapper.characterEntityList2DTOList(entities,true);
     }
 
     public List<CharacterDTO> getByFilters(String name, Integer age, List<Long> movie){
         CharacterFilterDTO filterDTO = new CharacterFilterDTO();
         List<CharacterEntity> entites = characterRepository.findAll(characterSpecification.getByFilters(filterDTO));
-        List<CharacterDTO> result = characterMapper.characterEntityList2DTOList(entites);
+        List<CharacterDTO> result = characterMapper.characterEntityList2DTOList(entites,true);
         return result;
     }
 

@@ -18,14 +18,16 @@ public class MovieMapper {
     @Autowired
     GenderMapper genderMapper;
 
-    public MovieEntity movieDTO2Entity (MovieDTO dto){
+    public MovieEntity movieDTO2Entity (MovieDTO dto, boolean loadCharacters){
         MovieEntity entity = new MovieEntity();
 
         entity.setImage(dto.getImage());
         entity.setTitle(dto.getTitle());
         entity.setCreationDate(dto.getCreationDate());
         entity.setQualification(dto.getQualification());
-        entity.setCharacters(characterMapper.characterDTOList2EntityList(dto.getCharacters()));
+        if(loadCharacters){
+            entity.setCharacters(characterMapper.characterDTOList2EntityList(dto.getCharacters(),false));
+        }
         entity.setGender(genderMapper.genderDTO2Entity(dto.getGender()));
 
         return entity;
@@ -39,7 +41,7 @@ public class MovieMapper {
         dto.setCreationDate(entity.getCreationDate());
         dto.setQualification(entity.getQualification());
         if(loadCharacters){
-            List<CharacterDTO> characterDTOS = characterMapper.characterEntityList2DTOList(entity.getCharacters());
+            List<CharacterDTO> characterDTOS = characterMapper.characterEntityList2DTOList(entity.getCharacters(),false);
             dto.setCharacters(characterDTOS);
         }
         dto.setGender(genderMapper.genderEntity2DTO(entity.getGender()));
@@ -47,10 +49,10 @@ public class MovieMapper {
         return dto;
     }
 
-    public List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entities){
+    public List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entities, boolean loadCharacters){
         List<MovieDTO> dtos = new ArrayList<>();
         for (MovieEntity entity:entities) {
-            dtos.add(movieEntity2DTO(entity,false));
+            dtos.add(movieEntity2DTO(entity,loadCharacters));
         }
         return dtos;
     }
@@ -64,10 +66,10 @@ public class MovieMapper {
         entity.setGender(genderMapper.genderDTO2Entity(dto.getGender()));
     }
 
-    public List<MovieEntity> movieDTOList2EntityList(List<MovieDTO> dtos){
+    public List<MovieEntity> movieDTOList2EntityList(List<MovieDTO> dtos, boolean loadCharacters){
         List<MovieEntity> entities = new ArrayList<>();
         for (MovieDTO dto : dtos){
-            entities.add(movieDTO2Entity(dto));
+            entities.add(movieDTO2Entity(dto,loadCharacters));
         }
         return entities;
     }

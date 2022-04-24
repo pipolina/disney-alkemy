@@ -22,11 +22,13 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
     }
 
+    /*
     @GetMapping("/list")
     public ResponseEntity<List<MovieDTO>> getAll(){
         List<MovieDTO> movies = movieService.getAllMovies();
         return ResponseEntity.ok().body(movies);
     }
+     */
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -47,6 +49,21 @@ public class MovieController {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         movieService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MovieDTO>> getByFilter(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long genderId,
+            @RequestParam(required = false, defaultValue = "ASC") String order
+    ){
+        List<MovieDTO> movies;
+        if(name==null & genderId==null){
+            movies = movieService.getAllMovies();
+        }else{
+            movies = movieService.getByFilters(name, genderId, order);
+        }
+        return ResponseEntity.ok(movies);
     }
 
 }

@@ -12,5 +12,6 @@ public interface MovieService {
     MovieDTO findById(@NonNull Long id);
     MovieDTO update(Long id, MovieDTO movieDTO);
     void delete(@NonNull Long id);
+    List<MovieDTO> getByFilters(String name, Long genderId, String order);
 
 }

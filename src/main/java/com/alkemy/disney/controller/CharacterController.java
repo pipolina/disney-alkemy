@@ -35,26 +35,34 @@ public class CharacterController {
         characterService.delete(id);
     }
 
-    @GetMapping("/list")
-    @ResponseStatus(HttpStatus.OK)
-    public List<CharacterDTO> getAll(){
-        return characterService.getAll();
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CharacterDTO findById(@PathVariable Long id) {
         return  characterService.findById(id);
     }
 
-    @GetMapping("/characters")
+    //todo:como hago para q devuelva siempre todos los personajes
+    @GetMapping
     public ResponseEntity<List<CharacterDTO>> getByFilter(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer age,
             @RequestParam(required = false) List<Long> movie
     ){
-        List<CharacterDTO> characters = characterService.getByFilters(name, age, movie);
+        List<CharacterDTO> characters;
+        if(name==null & age==null & movie==null){
+            characters = characterService.getAll();
+        }else{
+            characters = characterService.getByFilters(name, age, movie);
+        }
         return ResponseEntity.ok(characters);
     }
+
+    /*
+    @GetMapping("/list")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CharacterDTO> getAll(){
+        return characterService.getAll();
+    }
+     */
 
 }
