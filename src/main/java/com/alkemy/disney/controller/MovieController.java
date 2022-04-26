@@ -1,5 +1,6 @@
 package com.alkemy.disney.controller;
 
+import com.alkemy.disney.dto.CharacterDTO;
 import com.alkemy.disney.dto.MovieDTO;
 import com.alkemy.disney.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,6 @@ public class MovieController {
         MovieDTO savedMovie = movieService.save(movieDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
     }
-
-    /*
-    @GetMapping("/list")
-    public ResponseEntity<List<MovieDTO>> getAll(){
-        List<MovieDTO> movies = movieService.getAllMovies();
-        return ResponseEntity.ok().body(movies);
-    }
-     */
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -64,6 +57,20 @@ public class MovieController {
             movies = movieService.getByFilters(name, genderId, order);
         }
         return ResponseEntity.ok(movies);
+    }
+
+    @PostMapping("/{idMovie}/characters/{idCharacter}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<MovieDTO> addCharacters(@PathVariable Long idMovie, @PathVariable Long idCharacter){
+        return ResponseEntity.ok().body(movieService.addCharacters(idMovie,idCharacter));
+    }
+
+    @DeleteMapping("/{idMovie}/characters/{idCharacter}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> deleteCharacter(@PathVariable Long idMovie, @PathVariable Long idCharacter){
+        movieService.deleteCharacter(idMovie,idCharacter);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
     }
 
 }

@@ -34,14 +34,16 @@ public class CharacterSpecification {
             if (!CollectionUtils.isEmpty(characterFilterDTO.getMovie())) {
                 Join<CharacterEntity, MovieEntity> join = root.join("movies", JoinType.INNER);
                 Expression<MovieEntity> movieId = join.get("id");
-                predicates.add(movieId.in(characterFilterDTO.getMovie()));
+                predicates.add(
+                        movieId.in(characterFilterDTO.getMovie())
+                );
             }
             if(!ObjectUtils.isEmpty(characterFilterDTO.getAge())){
                 predicates.add(
-                        criteriaBuilder.like(
-                                criteriaBuilder.toString(root.get("age")),
-                                "%"+characterFilterDTO.getAge().toString()+"%"
-                        )
+                        criteriaBuilder.equal(
+                                root.get("age"),
+                                characterFilterDTO.getAge()
+                         )
                 );
             }
             query.distinct(true);

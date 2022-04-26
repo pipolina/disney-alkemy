@@ -61,7 +61,7 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     public List<CharacterDTO> getByFilters(String name, Integer age, List<Long> movie){
-        CharacterFilterDTO filterDTO = new CharacterFilterDTO();
+        CharacterFilterDTO filterDTO = new CharacterFilterDTO(name,age,movie);
         List<CharacterEntity> entites = characterRepository.findAll(characterSpecification.getByFilters(filterDTO));
         List<CharacterDTO> result = characterMapper.characterEntityList2DTOList(entites,true);
         return result;

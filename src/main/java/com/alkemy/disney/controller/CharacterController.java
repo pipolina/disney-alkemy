@@ -41,7 +41,6 @@ public class CharacterController {
         return  characterService.findById(id);
     }
 
-    //todo:como hago para q devuelva siempre todos los personajes
     @GetMapping
     public ResponseEntity<List<CharacterDTO>> getByFilter(
             @RequestParam(required = false) String name,

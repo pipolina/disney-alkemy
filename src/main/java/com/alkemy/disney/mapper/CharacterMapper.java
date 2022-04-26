@@ -29,7 +29,6 @@ public class CharacterMapper {
         return entity;
     }
 
-    //todo: arreglar el tema de los load movies and characters
     public CharacterDTO characterEntity2DTO(CharacterEntity entity, boolean loadMovies){
         CharacterDTO dto = new CharacterDTO();
 
