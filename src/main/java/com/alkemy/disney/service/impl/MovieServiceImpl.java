@@ -92,4 +92,6 @@ public class MovieServiceImpl implements MovieService {
         movie.getCharacters().remove(character);
     }
 
+
+
 }

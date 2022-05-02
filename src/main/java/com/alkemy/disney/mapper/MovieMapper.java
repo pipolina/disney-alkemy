@@ -3,6 +3,7 @@ package com.alkemy.disney.mapper;
 import com.alkemy.disney.dto.CharacterDTO;
 import com.alkemy.disney.dto.MovieDTO;
 import com.alkemy.disney.entity.MovieEntity;
+import com.alkemy.disney.exception.ParamNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,11 @@ public class MovieMapper {
         entity.setImage(dto.getImage());
         entity.setTitle(dto.getTitle());
         entity.setCreationDate(dto.getCreationDate());
-        entity.setQualification(dto.getQualification());
+        if(dto.getQualification()>0 && dto.getQualification()<=5){
+            entity.setQualification(dto.getQualification());
+        }else {
+            throw new ParamNotFound("The qualification number is out of range");
+        }
         if(loadCharacters){
             entity.setCharacters(characterMapper.characterDTOList2EntityList(dto.getCharacters(),false));
         }
